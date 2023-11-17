@@ -3,17 +3,16 @@ echo "Running IPTables Script from:"
 pwd
 sleep 1
 iptables-save > ./b4script.iptables.bck
+#FLUSH and REMOVE ALL RULES:
 iptables -F
+iptables -X
+iptables -Z
 #
 # IPv6 DROP POLICY
 ip6tables -P INPUT DROP
 ip6tables -P OUTPUT DROP
 ip6tables -P FORWARD DROP
 #
-#FLUSH and REMOVE ALL RULES:
-iptables -F
-iptables -X
-
 # OPEN INBOUND UNLIMITED:
 iptables -A INPUT -p udp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p tcp --match multiport --dports 53 -j ACCEPT
