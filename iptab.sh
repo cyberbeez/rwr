@@ -18,8 +18,8 @@ iptables -A INPUT -p udp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p tcp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --dports 123 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --sports 123 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --dports 80,110,143 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --sports 80,110,143 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --dports 80,110,143,443 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --sports 80,110,143,443 -j ACCEPT
 #
 # DOS PREVENTION
 iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
@@ -42,8 +42,8 @@ iptables -A OUTPUT -p udp --match multiport --sports 53,123 -j ACCEPT
 iptables -A OUTPUT -p tcp --match multiport --dports 53 -j ACCEPT
 iptables -A OUTPUT -p tcp --match multiport --sports 53 -j ACCEPT
 iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
-iptables -A OUTPUT -p tcp --match multiport --dports 80,443,25,80,110,143 -j ACCEPT
-iptables -A OUTPUT -p tcp --match multiport --sports 80,443,25,80,110,143 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --dports 80,25,80,110,143 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --sports 80,25,80,110,143 -j ACCEPT
 iptables -A OUTPUT -p icmp -j ACCEPT
 #
 # IPv4 DROP POLICY
