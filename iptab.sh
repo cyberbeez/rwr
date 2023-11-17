@@ -18,8 +18,8 @@ iptables -A INPUT -p udp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p tcp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --dports 123 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --sports 123 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --dports 80,110,143,443 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --sports 80,110,143,443 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --dports 110,143 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --sports 110,143 -j ACCEPT
 #
 # DOS PREVENTION
 iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
