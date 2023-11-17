@@ -19,7 +19,7 @@ ip6tables -P FORWARD DROP
 iptables -A INPUT -p udp --match multiport --dports 53,123 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --sports 53,123 -j ACCEPT
 #INPUT [TCP] -Dest/Source Ports
-iptables -A INPUT -p tcp --match multiport --dports 25,53,80,110,143,443,8089,9418,9997-j ACCEPT
+iptables -A INPUT -p tcp --match multiport --dports 25,53,80,110,143,443,8089,9418,9997 -j ACCEPT
 iptables -A INPUT -p tcp --match multiport --sports 25,53,80,110,143,443,8089,9418,9997 -j ACCEPT
 #
 #Note: 80 may not be needed on Redhat, needs testing.
@@ -35,8 +35,8 @@ iptables -A INPUT -p tcp -m state --state NEW -m recent --update --seconds 3 --h
 iptables -A OUTPUT -p udp --match multiport --dports 53,80,123 -j ACCEPT
 iptables -A OUTPUT -p udp --match multiport --sports 53,80,123 -j ACCEPT
 #
-iptables -A OUTPUT -p tcp --match multiport --dports 25,53,80,110,143 -j ACCEPT
-iptables -A OUTPUT -p tcp --match multiport --sports 25,53,80,110,143 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --dports 25,53,80,110,143,443,8089,9418,9997 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --sports 25,53,80,110,143,443,8089,9418,9997 -j ACCEPT
 iptables -A OUTPUT -p icmp -j ACCEPT
 #
 # IPv4 DROP POLICY
