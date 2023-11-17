@@ -10,9 +10,6 @@ ip6tables -P INPUT DROP
 ip6tables -P OUTPUT DROP
 ip6tables -P FORWARD DROP
 #
-# Flush Input Drop Input Rule if it is shut:
-iptables -A INPUT -f -j DROP
-#
 # OPEN INBOUND UNLIMITED:
 iptables -A INPUT -p udp --match multiport --dports 53 -j ACCEPT
 iptables -A INPUT -p tcp --match multiport --dports 53 -j ACCEPT
