@@ -27,6 +27,7 @@ iptables -A INPUT -p tcp --match multiport --sports 25,53,80,110,123,143,443 -j 
 # DoS PREVENTION
 #Ping DoS:
 iptables -A INPUT -p icmp -m limit --limit 1/second -j ACCEPT
+#General IPTables Magic:
 iptables -A INPUT -p tcp -m recent --set
 iptables -A INPUT -p tcp -m state --state NEW -m recent --update --seconds 3 --hitcount 50 -j DROP
 #
