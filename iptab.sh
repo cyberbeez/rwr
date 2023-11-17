@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "Running IPTables Script from:"
 pwd
+echo "Backups Will BE HERE^^"
 sleep 1
 iptables-save > ./b4script.iptables.bck
 #FLUSH and REMOVE ALL RULES:
@@ -14,36 +15,25 @@ ip6tables -P OUTPUT DROP
 ip6tables -P FORWARD DROP
 #
 # OPEN INBOUND UNLIMITED:
-iptables -A INPUT -p udp --match multiport --dports 53 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --dports 53 -j ACCEPT
-iptables -A INPUT -p udp --match multiport --dports 123 -j ACCEPT
-iptables -A INPUT -p udp --match multiport --sports 123 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --dports 110,143 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --sports 110,143 -j ACCEPT
+#INPUT [UDP] -Dest/Source Ports
+iptables -A INPUT -p udp --match multiport --dports 53,123 -j ACCEPT
+iptables -A INPUT -p udp --match multiport --sports 53,123 -j ACCEPT
+#INPUT [TCP] -Dest/Source Ports
+iptables -A INPUT -p tcp --match multiport --dports 25,53,80,110,123,143,443 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --sports 25,53,80,110,123,143,443 -j ACCEPT
 #
-# DOS PREVENTION
-iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
-iptables -A INPUT -p udp -m state NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource -j DROP
-iptables -A INPUT -p udp -m state NEW -m recent --update --seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
-iptables -A INPUT -p tcp -m state NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource -j DROP
-iptables -A INPUT -p tcp -m state NEW -m recent --update --seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
+#Note: 80 may not be needed on Redhat, needs testing.
 #
-# RATE LIMITED OPEN INBOUND:
-iptables -A INPUT -p tcp --match multiport --dports 25,80,443 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --sports 25,80,443 -j ACCEPT
-iptables -A INPUT -p icmp -j ACCEPT
+# DoS PREVENTION
+#Ping DoS:
+iptables -A INPUT -p icmp -m limit --limit 1/second -j ACCEPT
 #
 # OPEN OUTBOUND
-iptables -A OUTPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
-iptables -A OUTPUT -p udp --match multiport --dports 53,123 -j ACCEPT
+iptables -A OUTPUT -p udp --match multiport --dports 53,80,123 -j ACCEPT
+iptables -A OUTPUT -p udp --match multiport --sports 53,80,123 -j ACCEPT
 #
-#
-iptables -A OUTPUT -p udp --match multiport --sports 53,123 -j ACCEPT
-iptables -A OUTPUT -p tcp --match multiport --dports 53 -j ACCEPT
-iptables -A OUTPUT -p tcp --match multiport --sports 53 -j ACCEPT
-iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
-iptables -A OUTPUT -p tcp --match multiport --dports 80,25,80,110,143 -j ACCEPT
-iptables -A OUTPUT -p tcp --match multiport --sports 80,25,80,110,143 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --dports 25,53,80,110,143 -j ACCEPT
+iptables -A OUTPUT -p tcp --match multiport --sports 25,53,80,110,143 -j ACCEPT
 iptables -A OUTPUT -p icmp -j ACCEPT
 #
 # IPv4 DROP POLICY
@@ -62,5 +52,5 @@ if ! grep -q "net.ipv6.conf.all.disable_ipv6 = 1" /etc/sysctl.conf; then
   sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
   sleep 1
 fi
-
+#
 iptables -L
