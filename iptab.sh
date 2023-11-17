@@ -34,7 +34,6 @@ iptables -A INPUT -p tcp --match multiport --sports 25,80,443 -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
 #
 # OPEN OUTBOUND
-iptables -A OUTPUT -f -j DROP
 iptables -A OUTPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
 iptables -A OUTPUT -p udp --match multiport --dports 53,123 -j ACCEPT
 #
