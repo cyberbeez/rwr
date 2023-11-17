@@ -24,9 +24,9 @@ iptables -A INPUT -p tcp --match multiport --sports 80,110,143 -j ACCEPT
 # DOS PREVENTION
 iptables -A INPUT -p tcp ! --tcp-flags SYN,ACK SYN -m state --state NEW -j DROP
 iptables -A INPUT -p udp -m state NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource -j DROP
-iptables -A INPUT -p udp -m state NEW -m recent --update -- seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
+iptables -A INPUT -p udp -m state NEW -m recent --update --seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
 iptables -A INPUT -p tcp -m state NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource -j DROP
-iptables -A INPUT -p tcp -m state NEW -m recent --update -- seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
+iptables -A INPUT -p tcp -m state NEW -m recent --update --seconds 10 --hitcount 50 --name DEFAULT --mask 255.255.255.255 --rsource
 #
 # RATE LIMITED OPEN INBOUND:
 iptables -A INPUT -p tcp --match multiport --dports 25,80,443 -j ACCEPT
