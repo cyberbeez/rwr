@@ -19,8 +19,8 @@ ip6tables -P FORWARD DROP
 iptables -A INPUT -p udp --match multiport --dports 53,123 -j ACCEPT
 iptables -A INPUT -p udp --match multiport --sports 53,123 -j ACCEPT
 #INPUT [TCP] -Dest/Source Ports
-iptables -A INPUT -p tcp --match multiport --dports 25,53,80,110,123,143,443 -j ACCEPT
-iptables -A INPUT -p tcp --match multiport --sports 25,53,80,110,123,143,443 -j ACCEPT
+iptables -A INPUT -p tcp --match multiport --dports 25,53,80,110,143,443,8089,9418,9997-j ACCEPT
+iptables -A INPUT -p tcp --match multiport --sports 25,53,80,110,143,443,8089,9418,9997 -j ACCEPT
 #
 #Note: 80 may not be needed on Redhat, needs testing.
 #
