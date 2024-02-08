@@ -2,6 +2,8 @@
 #This script will run a md5 hash backup and check job.
 #To use this script, change these variables:
 #file="/etc/passwd"
+
+### CHANGE ME: ###
 file="/d/f"
 while:
 do
