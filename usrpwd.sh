@@ -257,8 +257,8 @@ sudo find /var -perm -o+wxr -group root | less
 echo ""
 sleep 5
 echo "Make note of any unusual files with executable files and delete if needed"
-sleep 30
+sleep 10
 
 clear
 
-echo "Upgrade yours systems at this time. 'yum update' for Centos, 'apt-get update' & 'apt-get upgrade'"
+echo "Upgrade yours system at this time. SEND White Team a PASSWORD MEMO REPORT."
