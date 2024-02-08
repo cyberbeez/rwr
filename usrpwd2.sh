@@ -1,64 +1,20 @@
-# !/bin/bash
+#!/bin/bash
 
 clear
 
 #Grabs all current users that are able to login and displayes service accounts, also changes the passwords
 #and disables accounts if necessary
 
-# echo "The following accounts are able to login:"
+echo "The following accounts are able to login:"
+sleep 1
 users=$(cat /etc/passwd | grep /bin/bash | awk -F':' '{ print $1}')
-for f in $users;
-do
-  echo $f
-done
-
-sleep 10
-
-echo "Changing passwords for the following:"
-for f in $users;
-do
-  echo $f
-  sudo passwd $f
-done
-
-echo "Do any of these accounts stand out? Type yes or no:"
-
+sleep 2
+echo "Define User Pass for Normal Users:"
+read usrpass
 for u in $users;
 do
-  echo "Disable the account $u?"
-  read user_disable
-  if [ $user_disable == "no" ]
-  then
-    :
-  else
-    usermod -L $service_account
-  fi
+    echo -e "$usrpass\n$usrpass\n"| sudo passwd $u
 done
-
-sleep 10
-clear
-
-echo "The following accounts are service accounts:"
-user_accounts=$(cat /etc/passwd | grep -v /bin/bash | awk -F':' '{print $1}')
-for f in $user_accounts;
-do
-  echo $f
-done
-
-sleep 10
-
-echo "Do any of these accounts stand out? If yes type the name in now to change the password and disable. If none, type in 'none':"
-read service_account
-
-if [ $service_account == "none" ]
-then
-  :
-else
-  sudo passwd $service_account
-  usermod -L $service_account
-fi
-
-clear
 
 #Checks and changes current SSH configuration to be more secure
 #Checks for allow root login
@@ -83,7 +39,7 @@ else
   echo "PasswordAuthentication changed"
 fi
 
-sleep 5
+sleep 2
 
 #Removes any pre existing keys or other nonsense
 echo "Removing directory .ssh found in users homes"
@@ -93,7 +49,7 @@ do
   sudo rm -rf $dir
 done
 echo "Done"
-sleep 5
+sleep 2
 clear
 
 #Checks for running cronjobs for root, and all other users
@@ -106,7 +62,7 @@ do
   sleep 5
 done
 
-sleep 10
+sleep 2
 
 echo ""
 echo "Do you wish to modify any cronjobs? Enter yes or no when asked:"
