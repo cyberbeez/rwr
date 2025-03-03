@@ -5,6 +5,9 @@ backup="./backup"
 
 if [ ! -d $backup ]; then
     mkdir $backup
+    mkdir "$backup"/etc
+    mkdir "$backup"/etc/security
+    mkdir "$backup"/etc/network
 fi
 
 for file in $files
