@@ -3,7 +3,7 @@
 files=("/etc/sysctl.conf" "/etc/security/limits.conf" "/etc/syslog.conf" "/etc/network/interfaces" "/etc/resolv.conf" "/etc/passwd" "/etc/group" "/etc/shadow" "/etc/fstab" "/etc/mtab")
 backup="./backup"
 
-if [ -d $backup ]; then
+if [ ! -d $backup ]; then
     mkdir $backup
 fi
 
