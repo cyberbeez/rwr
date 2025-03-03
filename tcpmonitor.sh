@@ -1,6 +1,6 @@
 #!/bin/sh
 
-counter = 0
+counter=0
 netstat -nlp | grep SYN_RECV | while read -r line
 do
     ((counter++))
