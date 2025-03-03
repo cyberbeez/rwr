@@ -1,9 +1,5 @@
 #!/bin/sh
 
-counter=0
-netstat -nlp | grep SYN_RECV | while read -r line
-do
-    ((counter++))
-done
+counter='netstat -nlp | grep SYN_RECV | wc -l'
 
 echo "`date`: There were $counter incomplete TCP connections detected." >> /var/log/tcpmonitor.log
