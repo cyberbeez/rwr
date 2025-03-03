@@ -21,6 +21,7 @@ while :
 do
     for file in $files
     do
+        echo "$file": >> ./differences.txt
         diff $file $backup$file >> ./differences.txt
     done
     
