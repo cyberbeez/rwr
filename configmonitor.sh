@@ -22,7 +22,7 @@ do
     for file in $files
     do
         echo "$file": >> ./differences.txt
-        echo -e "\t `diff $file $backup$file`" >> ./differences.txt
+        echo `diff $file $backup$file` >> ./differences.txt
     done
     
     sleep 5m
